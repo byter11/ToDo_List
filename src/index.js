@@ -1,14 +1,22 @@
 
 import "./Todo.js";
+import Project from "./Project.js";
 import "./TodoEvents.js";
-let todos = [];
-function test(){
+let projects = [];
+
+function initializepage(){
     const header2 = document.getElementById('header-2');
-	let addbutton = document.createElement('div');
-	addbutton.innerHTML = "Add Todo";
-	addbutton.className = "todo-add";
-	addbutton.addEventListener("click",showform);
-	header2.appendChild(addbutton);
+	let addtodo = document.createElement('div');
+	addtodo.innerHTML = "Add Todo";
+	addtodo.className = "todo-add";
+	addtodo.addEventListener("click",showTodoForm);
+	header2.appendChild(addtodo);
+	
+	const projectlist = document.getElementById('project-list');
+	let addproj = document.createElement('i');
+	addproj.className = "fa fa-plus-circle";
+	addproj.addEventListener("click", showProjectForm);
+	projectlist.appendChild(addproj);
 	const priority = document.getElementsByClassName("priority-button");
 	for(let i=0;i<priority.length;i++)
 		priority[i].addEventListener("click",setpriority(i));
@@ -27,18 +35,19 @@ function closenav(){
 function opennav(){
     const nav = document.getElementById('navbar');
 	const main = document.getElementById('main');
-    nav.style.width = "15%";
-	main.style.marginLeft = "15%";
+	const WIDTH = window.getComputedStyle(document.body).getPropertyValue("--navwidth");
+    nav.style.width = WIDTH;
+	main.style.marginLeft = WIDTH;
 }
 window.setproject = e =>{
 	const activeproject = document.getElementsByClassName('active-project');
 	document.getElementById('project-name-display').innerHTML = activeproject[0].innerHTML;
 }
-function showform(){
-	document.getElementById('todo-form').style.height = "7rem";
+function showTodoForm(){
+	document.getElementById('todo-form').style.height = "auto";
 }
 function setpriority(e){
 
 }
-test();
-export {todos};
+initializepage();
+export {projects};
