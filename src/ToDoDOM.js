@@ -1,39 +1,57 @@
 
-function rendertodo(newtodo){
+import {selectProject,completeTodo,removeProject} from "./TodoEvents.js";
+
+function renderTodo(newtodo){
 	let todo = document.createElement('div');
-	let checkicon = document.createElement('i');
-	checkicon.className = "fa fa-check-circle";
-	checkicon.addEventListener("click",completetodo);
-	todo.appendChild(checkicon);
-	todo.className = "todo";
-	let todoitems = [];
-	let newtodoitems = newtodo.toList();
-	for(let i=0;i<3;i++){
-		todoitems[i] = document.createElement('div');
-		todoitems[i].className = 'todo-item';
-		todoitems[i].innerHTML = newtodoitems[i];
-		todo.appendChild(todoitems[i]);
+	todo.classList = "todo";
+	let name = document.createElement('span');
+	let desc = document.createElement('span');
+	let date = document.createElement('span');
+	let priority = document.createElement('span');
+	let doneicon = document.createElement('i');
+	doneicon.className = "fa fa-check-circle";
+		doneicon.addEventListener('click',completeTodo);
+	priority.className = "fa fa-circle";
+	name.innerHTML = newtodo.name;
+	desc.innerHTML = newtodo.description;
+	date.innerHTML = newtodo.date;
+	let prioritydict = {
+		'high': 'red',
+		'medium': 'yellow',
+		'low': 'lightgreen'
 	}
-	todoitems[3] = document.createElement('div');
-	todoitems[3].className = "prioritybox";
-	todoitems[3].style.backgroundColor = newtodoitems[3];
-	todo.appendChild(todoitems[3]);
-	console.log(newtodoitems);
-	let todolist = document.getElementById('project');
-	todolist.insertBefore(todo,todolist.childNodes[0]);
+	priority.style.color = prioritydict[newtodo.priority];
+	todo.appendChild(name);
+	todo.appendChild(desc);
+	todo.appendChild(date);
+	todo.appendChild(priority);
+	todo.appendChild(doneicon);
+	let list = document.getElementById('todo-list');
+	list.insertBefore(todo,document.getElementById('addtodoicon'));
 }
-function completetodo(evt){
-	console.log('complete todo');
-	let todo = evt.currentTarget.parentNode;
-	evt.currentTarget.style.color = "lightgreen";
-	evt.currentTarget.addEventListener('click',removetodo);
-	for(let i = 1;i<todo.childNodes.length;i++){
-		todo.childNodes[i].style.textDecoration = 'line-through';
+
+function renderProject(proj){
+	let list = document.getElementById('project-list');
+	let newProject = document.createElement('div');
+	newProject.innerHTML = proj.name;
+	newProject.addEventListener('click',selectProject);
+	let deleteicon = document.createElement('i');
+	deleteicon.className = "fa fa-close";
+	deleteicon.style.color = "gainsboro";
+	deleteicon.addEventListener('click',removeProject);
+	newProject.appendChild(deleteicon);
+	list.appendChild(newProject);
+	return newProject;
+}
+
+function renderProjectTodos(proj){
+	let todolist = document.getElementById('todo-list');
+	let addtodoicon = document.getElementById('addtodoicon');
+	todolist.innerHTML = '';
+	for(let i=0;i<proj.todos.length;i++){
+		renderTodo(proj.todos[i]);
 	}
-	todo.childNodes[4].style.backgroundColor = "gray";
+
+	todolist.appendChild(addtodoicon);
 }
-function removetodo(evt){
-	let todo = evt.currentTarget.parentNode;
-	todo.parentNode.removeChild(todo);
-}
-export default rendertodo;
+export {renderTodo,renderProject,renderProjectTodos};

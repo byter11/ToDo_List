@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{3:function(i,t,n){"use strict";n.r(t);t.default=(i,t,n,o)=>({name:i,description:t,date:n,priority:o,toList:()=>[i,t,n,o]})}}]);

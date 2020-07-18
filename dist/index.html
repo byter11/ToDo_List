@@ -8,38 +8,17 @@
         <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
     </head>
     <body>
-        <nav id="navbar">
-            <ul id="project-list">
-                <li><a class="active-project" onclick="setproject()"> Test Project</a></li>
-                <li><a> Test Project 2</a></li>
-            </ul>
-        </nav>
-        <div id="header">  
-            <a id="nav-button" onclick="navaction()"> <i class="fa fa-bars"></i><span id="project-text">&nbsp;PROJECTS</span></a>
-            <h1> <span>WAT DO </span></h1>
-        </div>
-		<div id="main">
-            <div id="header-2"><span id="project-name-display"></span> </div>
-            <div id="todo-form">
-                <input id="nameinput" type="text" placeholder="Name">
-                <input id="dateinput" type="date">
-                <ul id="priority">
-                    <li><input type="button" class="priority-button active" style="background: rgb(121, 250, 149);"></li>
-                    <li><input type="button" class="priority-button" style="background: yellow;"></li>
-                    <li><input type="button" class="priority-button" style="background: red;"></li>
-                </ul>
-                <textarea id="descinput" type="text" rows="2" placeholder="Description"></textarea>
-                <input type="submit" value="Submit" id="submit" onclick="addtodo()">
-            </div>
-
-			<div id="project"> 
-				<!--<div class="todo">
-					<div class="todo-item">testname</div>
-					<div class="todo-item">testdesc</div>
-					<div class="todo-item">testduedate</div>
-					<div class="todo-item">testpriority</div>
-				</div>-->
+        <button id="clearstorage" onclick="clearstorage()">clear storage</button>
+        <h1> WAT DO </h1>
+		<nav>
+			<div id="project-list">
+			
 			</div>
+        </nav>
+        <div id= "todo-list">
+            <div class="todo" id="addtodoicon" onclick="showTodoForm(this)">
+                <i class="fa fa-plus-circle" ></i>
+            </div>
         </div>
         <script src="main.js"></script>
     </body>
