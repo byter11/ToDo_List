@@ -28,6 +28,9 @@ function renderTodo(newtodo){
 	todo.appendChild(doneicon);
 	let list = document.getElementById('todo-list');
 	list.insertBefore(todo,document.getElementById('addtodoicon'));
+	console.log(newtodo.name + "completed: " + newtodo.isCompleted);
+	if(newtodo.isCompleted)
+		doneicon.click();
 }
 
 function renderProject(proj){

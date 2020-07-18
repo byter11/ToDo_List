@@ -9,7 +9,7 @@ function addtodo(todo){
 	let details = [];
 	for(let i = 0;i<todo.childNodes.length - 1;i++)
 		details[i] = todo.childNodes[i].value;
-	let newtodo = Todo(details[0],details[1],details[2],details[3]);
+	let newtodo = Todo(details[0],details[1],details[2],details[3],false);
 	activeproject.todos.push(newtodo);
 	todo.parentNode.removeChild(todo);
 	saveToStorage();
@@ -33,6 +33,7 @@ function addproject(proj){
 	icon = document.getElementById('addprojicon');
 	icon.style.color = '';
 	icon.addEventListener('click',showProjectForm);
+	
 }
 function selectProject(evt){
 	console.log('selecting');
@@ -44,6 +45,7 @@ function selectProject(evt){
 		if(active) 
 			active.classList.remove('active-project');
 		newactive.classList.add('active-project');
+		
 		activeproject = projects[getElementIndex(newactive)];
 		console.log(activeproject);
 		renderProjectTodos(activeproject);
@@ -56,6 +58,8 @@ function completeTodo(evt){
 	evt.currentTarget.style.color= "lightgreen";
 	evt.currentTarget.removeEventListener('click',completeTodo);
 	evt.currentTarget.addEventListener('click',removeTodo);
+	activeproject.todos[ getElementIndex(todo) ].isCompleted = true;
+	console.log('completed');
 }
 function removeTodo(evt){
 	let todo = evt.currentTarget.parentNode;
@@ -64,11 +68,20 @@ function removeTodo(evt){
 	saveToStorage();
 }
 function removeProject(evt){
+	evt.cancelBubble = true;
 	let project = evt.currentTarget.parentNode;
-	project.childNodes[1].removeEventListener('click',selectProject);
-	project.parentNode.removeChild(project);
+	const index = getElementIndex(project);
+	if(activeproject === projects[index]){
+		activeproject = null;
+		renderProjectTodos(Project('','',new Array));
+	}
+	console.log('Removing: '+ projects[index].name );
 	projects.splice( getElementIndex(project), 1);
-	if(projects.length >0) saveToStorage();
+	project.parentNode.removeChild(project);
+	
+	if(projects.length >0) {
+		saveToStorage();
+	}
 	else window.localStorage.clear();
 }
 function doesExistAlready(name){
