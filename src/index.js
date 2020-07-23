@@ -1,6 +1,6 @@
-import {addtodo,addproject,activeproject, selectProject} from "./TodoEvents.js";
-import { renderProject } from "./ToDoDOM.js";
-
+import {addTodo,addProject,activeproject, selectProject} from "./EventHandling.js";
+import {renderProject } from "./Rendering.js";
+import {TodoForm} from "./Todo.js"
 let projects = [];
 
 function initializepage(){
@@ -32,14 +32,14 @@ function showProjectForm(evt){
 	newproject.addEventListener('keyup',e=>{
 										if(event.keyCode === 13) {
 										event.preventDefault();
-										addproject(newproject); }
+										addProject(newproject); }
 											}	);
 	document.getElementById('project-list').appendChild(newproject);
 	i.style.color = "lightgreen";
 	i.parentNode.replaceChild(i.cloneNode(true),i);
 	i = document.getElementById('addprojicon');
 	i.classList.remove('shake');
-	i.addEventListener('click',e=>{ addproject(newproject); });
+	i.addEventListener('click',e=>{ addProject(newproject); });
 }
 window.showTodoForm = function(button){
 	if(!activeproject) {
@@ -47,36 +47,12 @@ window.showTodoForm = function(button){
 		return;
 	}
 	button.classList.remove('shake');
-	let newtodo = document.createElement('div');
-	newtodo.className = 'todo';
-	let Field = [];
-	Field[0] = document.createElement('input');
-	Field[0].placeholder='name';
-	Field[1] = document.createElement('textarea');
-	Field[1].placeholder = 'description';
-	Field[2] = document.createElement('input');
-	Field[2].type = 'date';
-	Field[3] = document.createElement('select');
-		const options = ['high','medium','low'];
-		for(let i = 0;i<options.length;i++)	{
-			const o = document.createElement('option');
-			o.value = options[i];
-			o.innerHTML = options[i];
-			console.log(o.value);
-			Field[3].appendChild(o);
-		}
-	Field[3].value = 'medium';
-	Field[4] = document.createElement('button');
-	Field[4].value = "Save";
-	Field[4].className = "save-button";
-	Field[4].innerHTML = "Save";
-	Field[4].addEventListener('click',e=>{ addtodo(newtodo); } );
-
-	for(let i = 0; i<Field.length; i++)
-		newtodo.appendChild(Field[i]);
+	const form = TodoForm();	
+	form.querySelector(".save-button").addEventListener('click',addTodo );
 	const list = document.getElementById('todo-list');
-	list.insertBefore(newtodo,document.getElementById('addtodoicon'));
+	list.insertBefore(form,document.getElementById('addtodoicon'));
 }
+
 window.clearstorage = e=>{
 	console.log("Storage cleared");
 	window.localStorage.clear();

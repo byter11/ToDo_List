@@ -1,22 +1,22 @@
-import Todo from "./Todo.js";
+import {Todo,TodoForm} from "./Todo.js";
 import Project from "./Project.js";
-import {renderTodo,renderProject,renderProjectTodos} from "./ToDoDOM.js";
+import {renderTodo,renderProject,renderProjectTodos} from "./Rendering.js";
 import {showProjectForm, projects} from "./index.js";
 
 let activeproject = null;
 
-function addtodo(todo){
+function addTodo(evt){
+	const form = evt.currentTarget.parentNode;
 	let details = [];
-	for(let i = 0;i<todo.childNodes.length - 1;i++)
-		details[i] = todo.childNodes[i].value;
+	for(let i = 0;i<form.childNodes.length - 1;i++)
+		details[i] = form.childNodes[i].value;
 	let newtodo = Todo(details[0],details[1],details[2],details[3],false);
 	activeproject.todos.push(newtodo);
-	todo.parentNode.removeChild(todo);
+	renderTodo(newtodo,form);
 	saveToStorage();
-	renderTodo(newtodo);
 	console.log(details);
 }
-function addproject(proj){
+function addProject(proj){
 	console.log('adding');
 	let name = proj.value;
 	let icon = document.getElementById('addprojicon');
@@ -67,6 +67,19 @@ function removeTodo(evt){
 	todo.parentNode.removeChild(todo);
 	saveToStorage();
 }
+
+function editTodo(evt){
+	console.log('editing');
+	let todo = evt.currentTarget.parentNode.parentNode;
+	let details = [];
+	for(let i=0; i<3; i++){
+		details[i] = todo.childNodes[i].innerHTML;
+	}
+	console.log(details);
+	const form = TodoForm(details[0],details[1],details[2],details[3]);
+	form.querySelector(".save-button").addEventListener('click',addTodo);
+	todo.parentNode.replaceChild(form,todo);
+}
 function removeProject(evt){
 	evt.cancelBubble = true;
 	let project = evt.currentTarget.parentNode;
@@ -106,4 +119,4 @@ function saveToStorage(){
 	window.localStorage.clear();
 	window.localStorage.setItem('projects',JSON.stringify(projects));
 }
-export {addtodo,addproject,selectProject,completeTodo,removeProject,activeproject};
+export {addTodo,addProject,selectProject,completeTodo,editTodo,removeProject,activeproject};
