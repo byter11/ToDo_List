@@ -101,12 +101,16 @@ nav i{
 .todo input,textarea{
 	border: 0.1px ridge gainsboro;
 }
-.fa-check-circle{
+#todo-options{
 	position: absolute;
+	top: 2px;
+	right: 2px;
+}
+#todo-options *{
 	color: lightgray;
-	font-size: 30px;
-	top: 5px;
-	right: 5px;
+	font-size: 20px;
+	top: 2px;
+	right: 2px;
 }
 #addtodoicon i{
 	font-size: 40px;
