@@ -41,6 +41,7 @@ function showProjectForm(evt){
 	i.classList.remove('shake');
 	i.addEventListener('click',e=>{ addProject(newproject); });
 }
+
 window.showTodoForm = function(button){
 	if(!activeproject) {
 		button.classList.add('shake');
@@ -57,5 +58,7 @@ window.clearstorage = e=>{
 	console.log("Storage cleared");
 	window.localStorage.clear();
 }
+
 initializepage();
+
 export {showProjectForm,projects};

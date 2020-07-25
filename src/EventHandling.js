@@ -52,9 +52,9 @@ function selectProject(evt){
 	}
 }
 function completeTodo(evt){
-	let todo = evt.currentTarget.parentNode;
+	let todo = evt.currentTarget.parentNode.parentNode;
 	todo.style.textDecoration = "line-through";
-	todo.childNodes[3].style.color = "gray";
+	todo.childNodes[2].style.color = "gray";
 	evt.currentTarget.style.color= "lightgreen";
 	evt.currentTarget.removeEventListener('click',completeTodo);
 	evt.currentTarget.addEventListener('click',removeTodo);
@@ -79,6 +79,7 @@ function editTodo(evt){
 	const form = TodoForm(details[0],details[1],details[2],details[3]);
 	form.querySelector(".save-button").addEventListener('click',addTodo);
 	todo.parentNode.replaceChild(form,todo);
+	activeproject.todos.splice(getElementIndex(todo),1);
 }
 function removeProject(evt){
 	evt.cancelBubble = true;
