@@ -62,7 +62,7 @@ function completeTodo(evt){
 	console.log('completed');
 }
 function removeTodo(evt){
-	let todo = evt.currentTarget.parentNode;
+	let todo = evt.currentTarget.parentNode.parentNode;
 	activeproject.todos.splice(getElementIndex(todo),1);
 	todo.parentNode.removeChild(todo);
 	saveToStorage();
