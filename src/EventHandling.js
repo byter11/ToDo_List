@@ -59,6 +59,7 @@ function completeTodo(evt){
 	evt.currentTarget.removeEventListener('click',completeTodo);
 	evt.currentTarget.addEventListener('click',removeTodo);
 	activeproject.todos[ getElementIndex(todo) ].isCompleted = true;
+	saveToStorage();
 	console.log('completed');
 }
 function removeTodo(evt){
